@@ -15,3 +15,11 @@ require("../models/Event");
 
 //User
 require("../models/User");
+
+
+//Admin
+require("../models/Admin");
+
+//Admin
+require("../models/AdminAccess");
+

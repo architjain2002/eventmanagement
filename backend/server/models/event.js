@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 
 const eventSchema = new mongoose.Schema({
-  eventId: {
-    type: String,
-    required: true,
-  },
+//   eventId: {
+//     type: String,
+//     required: true,
+//   },
   name: {
     type: String,
     required: true,
@@ -17,7 +17,7 @@ const eventSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  capcity: {
+  capacity: {
     type: Number,
     required: true,
   },

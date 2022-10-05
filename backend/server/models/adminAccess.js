@@ -9,13 +9,17 @@ const adminAccessSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  secretId: {
-    type: String,
-    required: true,
-  },
-  status: {
-    type: String,
-    required: true,
-  },
+  // secretId: {
+  //   type: String,
+  //   required: true,
+  // },
+  // status: {
+  //   type: String,
+  //   required: true,
+  // },
+  isValid:{
+    type:Boolean,
+    default:true,
+  }
 });
-module.exports = mongoose.model("AdminAccess", userSchema);
+module.exports = mongoose.model("AdminAccess", adminAccessSchema);
