@@ -22,10 +22,14 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
       },
-      status: {
-        type: String,
-        required: true,
-      },
+      // status: {
+      //   type: String,
+      //   required: true,
+      // },
+      isValid:{
+        type:Boolean,
+        default:true,
+      }
     },
   ],
 });

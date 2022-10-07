@@ -14,6 +14,7 @@ router.post("/addevents", controller.addEvents);
 
 
 
+
 //Participant
 
 // Add Participant
@@ -26,6 +27,18 @@ router.post("/signIn",controller.signIn);
 router.post("/register",controller.register);
 //Capacity !=0 then only register,capacity -> event-1 , user-> new event, adminAccess-> secretId
 
+//Not allowed for second time !! , similarly a user can not signUp twice.
+
+//deRegister
+router.delete("/deleteRegister",controller.deleteRegistration);
+
+//signOut -> Particpant , Admin
+
+
+//get events registered by user
+router.get("/events/:userId",controller.registeredEventByUser);
+
+
 
 
 //Admin
@@ -36,5 +49,10 @@ router.post("/signUpAdmin",controller.signUpAdmin);
 //signInAdmin
 router.post("/signInAdmin",controller.signInAdmin);
 
+
+//participant Verification
+router.post("/userverificaton",controller.userVerification);
+
+router.delete("/deleteEvent/:eventId",controller.deleteEvent);
 
 module.exports = router;

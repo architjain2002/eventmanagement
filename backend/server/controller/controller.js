@@ -7,7 +7,7 @@ require("../middleware/database");
 
 
 
-Event
+//all events
 exports.getevents = async (req, res) => {
   try {
     const events = await Event.find({});
@@ -17,6 +17,7 @@ exports.getevents = async (req, res) => {
   }
 };
 
+//new events
 exports.addEvents = async (req, res) => {
   try {
     const newEvent = new Event({
@@ -80,23 +81,85 @@ exports.register = async(req,res)=>{
     const userId=req.body.userId;
 
     try{
+
       const newRegistration= new AdminAccess({
         eventId:eventId,
         userId:userId,
       });
 
+      //New registration added
       await newRegistration.save();
 
-      // const events=await Event.find({eventId});
+      //Update Participant Capacity
+      const eventName=await Event.findOne({eventId:eventId});
 
-      
-      
+      if(eventName.capacity<=0)
+        return res.send("No More Seats Available");
 
-      await Event.findOneAndUpdate({eventId:eventId}, {$inc : {capacity: -1}});
-      //$inc : {capacity : 1}
 
+      await Event.findOneAndUpdate({eventId:eventId}, {$inc : {capacity: -1}}); 
       
-      res.send("done dona done");
+      //Add secretId in the users
+      const eventDetail=await AdminAccess.findOne({userId:userId,eventId:eventId});
+
+      //Add in the array
+      const secretId=eventDetail._id.toString();
+      await User.findOneAndUpdate({ _id: userId}, { $push: { userEvents: {eventId:eventId,secretId:secretId,isValid:true}} });
+
+      res.send("Registered");
+      
+    }
+    catch(err){
+      res.status(500).send({ message: err.message || "Error Occured" });
+    }
+};
+
+
+exports.deleteRegistration = async(req,res)=>{
+  const eventId=req.body.eventId;
+  const userId=req.body.userId;
+
+  try{
+    //Add secretId in the users
+    const eventDetail=await AdminAccess.findOne({userId:userId,eventId:eventId});
+
+    //Add in the array
+    const secretId=eventDetail._id.toString();
+    await User.findOneAndUpdate({ _id: userId}, { $pull: { userEvents: {eventId:eventId,secretId:secretId}} });
+
+    await AdminAccess.deleteOne({eventId:eventId,userId:userId});
+
+    //Update Participant Capacity
+    await Event.findOneAndUpdate({eventId:eventId}, {$inc : {capacity:1}});
+    res.send("De-Registered");
+
+  }
+  catch(err){
+    res.status(500).send({ message: err.message || "Error Occured" });
+  }
+    
+
+};
+
+//Registered Event by user
+exports.registeredEventByUser=async (req,res)=>{
+    const user=req.params.userId;
+    try{
+      const userName=await User.findOne({_id:user});
+      const eventsList=userName.userEvents;
+
+      // console.log(eventsList);
+
+      let array=[];
+      for await(const e of eventsList){
+        const eventId=e.eventId;
+          
+          const eventDetail=await Event.findOne({eventId:eventId});
+
+          array.push(eventDetail);
+      }
+
+      res.send(array);
 
     }
     catch(err){
@@ -106,11 +169,7 @@ exports.register = async(req,res)=>{
 
 
 
-
-
-
 //Admin
-
 exports.signUpAdmin = async (req, res) => {
   try {
     const newParticpant = new Admin({
@@ -144,3 +203,63 @@ exports.signInAdmin = async(req,res)=>{
     res.status(500).send({ message: err.message || "Error Occured" });
   }
 };
+
+
+exports.userVerification = async(req,res) =>{
+
+    //User Id has secret id - > check whether adminAccess has  same  secretId or not
+  try{
+    const eventId=req.body.eventId;
+    const userId=req.body.userId;
+    const secretId=req.body.secretId;
+
+    const adminHasData=await AdminAccess.findById({_id:secretId});
+    if(!adminHasData)
+      return res.send("No data-Maar saale ko");
+    const adminDataeventId=adminHasData.eventId;
+    const adminDatauserId=adminHasData.userId;
+
+    if(adminDataeventId===eventId && adminDatauserId===userId)
+        return res.send("Verified");
+      
+    else  
+      return res.send("Not Verified - Pakad saale ko");
+  }
+  catch(err){
+    res.status(500).send({ message: err.message || "Error Occured" });
+  }
+}
+
+
+
+//Needs to be checked
+//Update Event -> Only name ,venue, participant
+
+//delete event
+exports.deleteEvent = async (req,res) =>{
+try{
+    const eventId=req.params.eventId;
+
+    const eventsInAdmin=await AdminAccess.find({eventId:eventId});
+    
+    for await (const event of eventsInAdmin){
+        const userId=event.userId;
+
+        
+       //Delete Event from User Array 
+      
+       //Pull that value in the array which has eventId and delete it
+      await User.findOneAndUpdate({ _id: userId}, { $pull: { userEvents: {eventId:eventId}} });
+        
+    }
+
+    await AdminAccess.deleteMany({eventId:eventId});
+
+    await Event.deleteMany({eventId:eventId});
+    res.send("deleted");
+  }
+    catch(err){
+      res.status(500).send({ message: err.message || "Error Occured" });
+    }
+};
+
