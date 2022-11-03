@@ -12,9 +12,9 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-
-const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+import HomeIcon from '@mui/icons-material/Home';
+const pages = ['My Events'];
+const settings = ['Profile','Logout'];
 
 function Navbar({user}) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -39,7 +39,7 @@ function Navbar({user}) {
     <AppBar>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+        <HomeIcon sx={{display:{xs:'none',md:'flex'},mr:1}}/>
           <Typography
             variant="h6"
             noWrap
@@ -55,7 +55,7 @@ function Navbar({user}) {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            Rievera
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -94,7 +94,7 @@ function Navbar({user}) {
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          <HomeIcon sx={{display:{xs:'flex',md:'none'},mr:1}}/>
           <Typography
             variant="h5"
             noWrap
@@ -111,14 +111,14 @@ function Navbar({user}) {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            Rievera
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                sx={{ my: 2, color: 'white', display: 'block' ,mx:10,fontWeight:'bolder', fontSize:'larger',    fontFamily: 'monospace'}}
               >
                 {page}
               </Button>

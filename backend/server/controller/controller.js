@@ -44,7 +44,7 @@ exports.signUp = async (req, res) => {
       const alreadyPresent=await User.find({name:req.body.name});
       const length=alreadyPresent.length;
     
-      console.log(alreadyPresent,length)
+
       if(length>0){
         res.status(200).send({message:"User Already Present"});
       }
