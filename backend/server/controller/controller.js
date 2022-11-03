@@ -41,14 +41,24 @@ exports.addEvents = async (req, res) => {
 
 exports.signUp = async (req, res) => {
   try {
-    const newParticpant = new User({
-      name: req.body.name,
-      password: req.body.password,
-    });
-
-    await newParticpant.save();
-    res.status(200).send("User Added");
-  } catch (err) {
+      const alreadyPresent=await User.find({name:req.body.name});
+      const length=alreadyPresent.length;
+    
+      console.log(alreadyPresent,length)
+      if(length>0){
+        res.status(200).send({message:"User Already Present"});
+      }
+      else{
+        const newParticpant = new User({
+          name: req.body.name,
+          password: req.body.password,
+        });
+        
+        await newParticpant.save();
+        res.status(200).send({message:"User Added"});
+      }
+  } 
+  catch (err) {
     res.status(500).send({ message: err.message || "Error Occured" });
   }
 };
@@ -58,15 +68,15 @@ exports.signIn = async(req,res)=>{
   
   const username=req.body.username;
   const password=req.body.password;
-
+ 
   try{
     const participant= await User.find({username,password});
-
-    if(!participant){
-        res.send("No user found");
+    console.log(participant);
+    if(!participant.length){
+        res.send({message:"No user found"});
     }
     else{
-      res.send("Success");
+      res.send({message:"Success!!"});
     }
   }
   catch(err){
@@ -192,7 +202,7 @@ exports.signInAdmin = async(req,res)=>{
   try{
     const admin= await Admin.find({username,password});
 
-    if(!admin){
+    if(!admin.length){
         res.send("No user found");
     }
     else{
