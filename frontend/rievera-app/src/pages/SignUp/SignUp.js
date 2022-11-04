@@ -40,8 +40,7 @@ function SignUp() {
         });
         
         const json = await response.json();
-       
-        alert(json.message);
+        window.location.pathname='/signin';
 
     }
     return SignUp();

@@ -9,7 +9,7 @@ const controller = require("../controller/controller");
 //getevent -> fetches you event list
 router.get("/getevents", controller.getevents);
 
-//Add events
+//Add events - by admin
 router.post("/addevents", controller.addEvents);
 
 

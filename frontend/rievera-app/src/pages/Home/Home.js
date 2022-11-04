@@ -5,6 +5,9 @@ import EventCard from '../../components/Card/Card';
 function Home() {
  const location=useLocation();
  const user=location.state.username;
+ const password=location.state.password;
+ const id=location.state.id;
+ 
  const events=[
             {
               name:'Robowars',
@@ -38,7 +41,7 @@ function Home() {
           ];
   return (
     <div>
-        <Navbar user={user}/>
+        <Navbar user={user} password={password} id={id}/>
         <div style={{display:'flex',flexWrap:'wrap'}}>
         {events.map((event) => (
 

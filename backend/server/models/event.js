@@ -24,6 +24,15 @@ const eventSchema = new mongoose.Schema({
   venue: {
     type: String,
   },
+  image:{
+    type:String,
+  },
+  text:{
+    type:String,
+  },
+  website:{
+    type:String
+  }
 });
 
 module.exports = mongoose.model("Event", eventSchema);

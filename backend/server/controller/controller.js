@@ -24,8 +24,11 @@ exports.addEvents = async (req, res) => {
       name: req.body.name,
       startTime: req.body.startTime,
       endTime: req.body.endTime,
-      participant: req.body.participant,
+      capacity: req.body.capacity,
       venue: req.body.venue, 
+      image:req.body.image,
+      text:req.body.text,
+      website:req.body.website
     });
 
     await newEvent.save();
@@ -71,16 +74,16 @@ exports.signIn = async(req,res)=>{
  
   try{
     const participant= await User.find({username,password});
-    console.log(participant);
+  
     if(!participant.length){
         res.send({message:"No user found"});
     }
     else{
-      res.send({message:"Success!!"});
+      res.send({message:participant[0]._id});
     }
   }
   catch(err){
-    res.status(500).send({ message: err.message || "Error Occured" });
+    res.status(500).send({message:"Error Occured"});
   }
 
 };

@@ -11,14 +11,17 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
 import HomeIcon from '@mui/icons-material/Home';
+import { useNavigate} from 'react-router-dom';
+
 const pages = ['My Events'];
 const settings = ['Profile','Logout'];
 
-function Navbar({user}) {
+function Navbar({user,password,id}) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const navigate=useNavigate();
+  
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -35,6 +38,19 @@ function Navbar({user}) {
     setAnchorElUser(null);
   };
 
+  const handleOptions =(setting)=>{
+
+    if(setting==='Logout')
+      window.location.pathname='/signIn';
+    
+    //in else show profile
+    
+  }
+
+  const navigateToEvents=()=>{
+    navigate('/registeredevents',{state:{user,password,id}});
+  }
+
   return (
     <AppBar>
       <Container maxWidth="xl">
@@ -44,7 +60,7 @@ function Navbar({user}) {
             variant="h6"
             noWrap
             component="a"
-            href="/"
+            href="/home"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -89,7 +105,7 @@ function Navbar({user}) {
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                  <Typography textAlign="center" onClick={navigateToEvents}>{page}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -99,7 +115,7 @@ function Navbar({user}) {
             variant="h5"
             noWrap
             component="a"
-            href=""
+            href="/home"
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
@@ -117,7 +133,7 @@ function Navbar({user}) {
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={handleCloseNavMenu}
+                onClick={()=>{handleCloseNavMenu();navigateToEvents()}}
                 sx={{ my: 2, color: 'white', display: 'block' ,mx:10,fontWeight:'bolder', fontSize:'larger',    fontFamily: 'monospace'}}
               >
                 {page}
@@ -149,7 +165,7 @@ function Navbar({user}) {
             >
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                  <Typography textAlign="center" onClick={()=>handleOptions(setting)}>{setting}</Typography>
                 </MenuItem>
               ))}
             </Menu>

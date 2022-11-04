@@ -40,12 +40,12 @@ function SignIn() {
         
         const json = await response.json();
        
-        if(json.message==="Success!!"){
-            
-            navigate('/home',{state:{username:data.get('username')}});
+        if(json.message==="No user found"||json.message==="Error Occured"){
+          alert(json.message);
+
         }
         else{
-            alert("Enter Correct Credentials");
+          navigate('/home',{state:{username:data.get('username'),password: data.get('password'),id:json.message}});
         }
 
     }

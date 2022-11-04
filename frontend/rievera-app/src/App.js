@@ -12,6 +12,7 @@ import './App.css';
 import Signin from "./pages/Sigin/Signin";
 import SignUp from "./pages/SignUp/SignUp";
 import Home from "./pages/Home/Home";
+import UserEvents from "./pages/UserEvents/UserEvents";
 
 function App() {
 
@@ -34,8 +35,11 @@ function App() {
     {
       path:"/signIn",
       element:<Signin/>
+    },
+    {
+      path:"/registeredevents",
+      element:<UserEvents />
     }
-
   ]);
 
   return (
