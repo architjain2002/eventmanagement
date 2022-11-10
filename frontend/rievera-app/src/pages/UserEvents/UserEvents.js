@@ -4,10 +4,11 @@ import EventCard from '../../components/Card/Card';
 import Navbar from '../../components/Navbar/Navbar';
 function UserEvents() {
     const location=useLocation();
-    const user=location.state.user;
+    const username=location.state.username;
     const password=location.state.password;
     const id=location.state.id;
     const [userEvent,setUserEvent]=useState([]);
+    
 
     useEffect(()=>{
         const getUserEvent= async()=>{
@@ -18,16 +19,15 @@ function UserEvents() {
         }
         getUserEvent();
     },[])
-    console.log(userEvent);
   return (
     
     <div>
-        <Navbar user={user} password={password} id={id}/>
-        {userEvent.map((event) => (
+        <Navbar username={username} password={password} id={id}/>
+            {userEvent.map((event) => (
 
-            <EventCard key={event._id} eventname={event}/>
+                <EventCard key={event._id} eventname={event} state={"Deregister"}/>
 
-        ))}
+            ))}
     </div>
   )
 }

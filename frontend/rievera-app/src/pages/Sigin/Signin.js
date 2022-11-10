@@ -39,7 +39,7 @@ function SignIn() {
         });
         
         const json = await response.json();
-       
+        console.log(json);
         if(json.message==="No user found"||json.message==="Error Occured"){
           alert(json.message);
 

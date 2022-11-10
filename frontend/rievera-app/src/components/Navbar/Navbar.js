@@ -17,7 +17,7 @@ import { useNavigate} from 'react-router-dom';
 const pages = ['My Events'];
 const settings = ['Profile','Logout'];
 
-function Navbar({user,password,id}) {
+function Navbar({username,password,id}) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const navigate=useNavigate();
@@ -46,9 +46,12 @@ function Navbar({user,password,id}) {
     //in else show profile
     
   }
+  const navigateToHome=()=>{
+    navigate('/home',{state:{username,password,id}});
+  }
 
   const navigateToEvents=()=>{
-    navigate('/registeredevents',{state:{user,password,id}});
+    navigate('/registeredevents',{state:{username,password,id}});
   }
 
   return (
@@ -60,7 +63,8 @@ function Navbar({user,password,id}) {
             variant="h6"
             noWrap
             component="a"
-            href="/home"
+            // href="/home"
+            onClick={navigateToHome}
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -69,6 +73,7 @@ function Navbar({user,password,id}) {
               letterSpacing: '.3rem',
               color: 'inherit',
               textDecoration: 'none',
+              cursor:'pointer'
             }}
           >
             Rievera
@@ -115,7 +120,8 @@ function Navbar({user,password,id}) {
             variant="h5"
             noWrap
             component="a"
-            href="/home"
+            // href="/home"
+            onClick={navigateToHome}
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
@@ -125,6 +131,7 @@ function Navbar({user,password,id}) {
               letterSpacing: '.3rem',
               color: 'inherit',
               textDecoration: 'none',
+              cursor:'pointer'
             }}
           >
             Rievera
@@ -144,7 +151,7 @@ function Navbar({user,password,id}) {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt={user} src="#" />
+                <Avatar alt={username} src="#" />
               </IconButton>
             </Tooltip>
             <Menu

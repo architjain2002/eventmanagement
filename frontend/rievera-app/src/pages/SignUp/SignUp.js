@@ -24,7 +24,7 @@ function SignUp() {
     const data = new FormData(event.currentTarget);
 
     const SignUp= async()=>{
-        
+       
         const response=await fetch('http://localhost:3000/signUp',{
             method: "POST",
             headers: {
@@ -40,6 +40,10 @@ function SignUp() {
         });
         
         const json = await response.json();
+        if(json.message==="User Already Present"){
+            alert(json.message);
+        }
+
         window.location.pathname='/signin';
 
     }

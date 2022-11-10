@@ -1,51 +1,55 @@
-import React, { Component } from 'react'
+import React, { Component, useEffect,useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import Navbar from '../../components/Navbar/Navbar';
 import EventCard from '../../components/Card/Card';
 function Home() {
  const location=useLocation();
- const user=location.state.username;
+
+ const username=location.state.username;
  const password=location.state.password;
  const id=location.state.id;
+
+ const [events,setEvents]=useState([]);
+ const [userEvent,setUserEvent]=useState([]);
+ const filterByReference = (arr1, arr2) => {
+  let res = [];
+  res = arr1.filter(el => {
+     return !arr2.find(element => {
+      if(element!=null&&el!=null)
+        return element._id === el._id;
+     });
+    });
  
- const events=[
-            {
-              name:'Robowars',
-              text:'Bring your robots and win it all !',
-              image:'https://kettocdn.gumlet.io/media/campaign/75000/75535/image/5c0388c3ae85e.png?w=360&dpr=2.6'
-            },
+    return res;
+  }
 
-            {
-              name:'Devjams',
-              text:'Wanna develop Apps?',
-              image:'https://res.cloudinary.com/startup-grind/image/upload/c_fill,dpr_2.0,f_auto,g_center,q_auto:good/v1/gcs/platform-data-dsc/events/Event%20Thumbnail_VQ4tCho.png'
-            },
+  const getEvents= async()=>{
+    const response = await fetch('http://localhost:3000/getevents');
+    const json = await response.json();
+    setEvents(json);
+  }
 
-            {
-              name:'Coding Ninja',
-              text:'Are you a Ninja? Come and code',
-              image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtrTERbkcXhXIXOx--FDedawcBzvOUlQxrsQ&usqp=CAU'
-            },
+  const getUserEvent= async()=>{
+    const response = await fetch(`http://localhost:3000/events/${id}`);
+    const json = await response.json();
 
-            {
-              name:'Hacktoberfest',
-              text:"It's october, Ready Hackathon it is!",
-              image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReZUZ3U4P3SXqWFrMSyd781CA7QzyuK8nt8A&usqp=CAU'
-            },
+    setUserEvent(userEvent=>[...userEvent,json[0]]);
+  }
 
-            {
-              name:'Designathon',
-              text:'IxDa member? Come and design!!',
-              image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJPxoj-WgDNU2YtX8FiGcnB-6YPDNHmvFLKQ&usqp=CAU'
-            }
-          ];
+ useEffect(()=>{
+    getEvents();
+    getUserEvent();
+  },[]);
+
+
+  
   return (
     <div>
-        <Navbar user={user} password={password} id={id}/>
+        <Navbar username={username} password={password} id={id}/>
         <div style={{display:'flex',flexWrap:'wrap'}}>
-        {events.map((event) => (
+        {filterByReference(events,userEvent).map((newevent) => (
 
-            <EventCard key={event.name} eventname={event}/>
+            <EventCard key={newevent._id} eventname={newevent} state={"Register"} />
 
         ))}
         </div>
