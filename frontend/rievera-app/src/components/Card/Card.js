@@ -8,13 +8,64 @@ import Typography from '@mui/material/Typography';
 import { useNavigate,Navigate, redirect } from 'react-router-dom';
 
 
-function EventCard({eventname,state,handleClick}) {
+function EventCard({eventname,state,userId}) {
   
   const navigate=useNavigate();
   const url=eventname.website;
   const onclick=()=>{
     window.open(url,"_blank");
   }
+
+  const Register= async()=>{
+    
+    const response=await fetch('http://localhost:3000/register',{
+        method: "POST",
+        headers: {
+            'Content-type': 'application/json'
+        },
+        body: JSON.stringify(
+            { 
+                userId:userId,
+                eventId:eventname._id
+            }
+        )
+    });
+    
+    const json = await response.json();
+    window.location.reload(false);
+
+  }
+
+  const Deregister= async()=>{
+    
+    const response=await fetch('http://localhost:3000/deleteRegister',{
+        method: "DELETE",
+        headers: {
+            'Content-type': 'application/json'
+        },
+        body: JSON.stringify(
+            { 
+                userId:userId,
+                eventId:eventname._id
+            }
+        )
+    });
+    
+    const json = await response.json();
+    window.location.reload(false);
+
+  }
+
+
+
+  const handleClick=async()=>{
+      console.log(state);
+      if(state==="Register")
+          Register();
+      else
+          Deregister();
+  }
+  
   return (
     <Card sx={{ width:.40 ,margin:"5%"}}>
       <CardMedia

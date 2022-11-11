@@ -56,3 +56,7 @@ router.post("/userverificaton",controller.userVerification);
 router.delete("/deleteEvent/:eventId",controller.deleteEvent);
 
 module.exports = router;
+
+
+
+//if curr time > event's end time then delete that event

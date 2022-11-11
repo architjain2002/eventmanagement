@@ -73,13 +73,15 @@ exports.signIn = async(req,res)=>{
   const password=req.body.password;
  
   try{
-    const participant= await User.find({username,password});
+
+    const participant= await User.findOne({name:username,password:password});
   
-    if(!participant.length){
+    if(!participant){
         res.send({message:"No user found"});
     }
     else{
-      res.send({message:participant[0]._id});
+
+      res.send({message:participant._id});
     }
   }
   catch(err){
@@ -92,8 +94,17 @@ exports.signIn = async(req,res)=>{
 exports.register = async(req,res)=>{
     const eventId=req.body.eventId;
     const userId=req.body.userId;
-
+    
     try{
+
+      //Update Participant Capacity
+      const eventName=await Event.findOne({_id:eventId});
+      
+      if(eventName.capacity<=0)
+        return res.send({message:"No More Seats Available"});
+
+
+      await Event.findOneAndUpdate({_id:eventId}, {$inc : {capacity: -1}}); 
 
       const newRegistration= new AdminAccess({
         eventId:eventId,
@@ -103,14 +114,7 @@ exports.register = async(req,res)=>{
       //New registration added
       await newRegistration.save();
 
-      //Update Participant Capacity
-      const eventName=await Event.findOne({eventId:eventId});
-
-      if(eventName.capacity<=0)
-        return res.send("No More Seats Available");
-
-
-      await Event.findOneAndUpdate({eventId:eventId}, {$inc : {capacity: -1}}); 
+      
       
       //Add secretId in the users
       const eventDetail=await AdminAccess.findOne({userId:userId,eventId:eventId});
@@ -119,7 +123,7 @@ exports.register = async(req,res)=>{
       const secretId=eventDetail._id.toString();
       await User.findOneAndUpdate({ _id: userId}, { $push: { userEvents: {eventId:eventId,secretId:secretId,isValid:true}} });
 
-      res.send("Registered");
+      res.send({message:"Registered"});
       
     }
     catch(err){
@@ -142,9 +146,9 @@ exports.deleteRegistration = async(req,res)=>{
 
     await AdminAccess.deleteOne({eventId:eventId,userId:userId});
 
-    //Update Participant Capacity
-    await Event.findOneAndUpdate({eventId:eventId}, {$inc : {capacity:1}});
-    res.send("De-Registered");
+    //Update Event's Participant Capacity
+    await Event.findOneAndUpdate({_id:eventId}, {$inc : {capacity:1}});
+    res.send({message:"De-Registered"});
 
   }
   catch(err){
@@ -167,11 +171,10 @@ exports.registeredEventByUser=async (req,res)=>{
       for await(const e of eventsList){
         const eventId=e.eventId;
           
-          const eventDetail=await Event.findOne({eventId:eventId});
+          const eventDetail=await Event.findOne({_id:eventId});
 
           array.push(eventDetail);
       }
-
       res.send(array);
 
     }

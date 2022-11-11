@@ -32,8 +32,7 @@ function Home() {
   const getUserEvent= async()=>{
     const response = await fetch(`http://localhost:3000/events/${id}`);
     const json = await response.json();
-
-    setUserEvent(userEvent=>[...userEvent,json[0]]);
+    setUserEvent(userEvent=>[...userEvent,...json]);
   }
 
  useEffect(()=>{
@@ -49,7 +48,7 @@ function Home() {
         <div style={{display:'flex',flexWrap:'wrap'}}>
         {filterByReference(events,userEvent).map((newevent) => (
 
-            <EventCard key={newevent._id} eventname={newevent} state={"Register"} />
+            <EventCard key={newevent._id} eventname={newevent} state={"Register"} userId={id}/>
 
         ))}
         </div>

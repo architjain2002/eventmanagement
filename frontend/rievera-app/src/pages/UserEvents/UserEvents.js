@@ -14,22 +14,34 @@ function UserEvents() {
         const getUserEvent= async()=>{
             const response = await fetch(`http://localhost:3000/events/${id}`);
             const json = await response.json();
-        
-            setUserEvent(userEvent=>[...userEvent,json[0]]);
+            console.log("adfjdjf",json);
+            setUserEvent(userEvent=>[...userEvent,...json]);
         }
         getUserEvent();
     },[])
-  return (
     
-    <div>
-        <Navbar username={username} password={password} id={id}/>
-            {userEvent.map((event) => (
+    try{
+        return (
 
-                <EventCard key={event._id} eventname={event} state={"Deregister"}/>
+        <div>
+            <Navbar username={username} password={password} id={id}/>
+                {userEvent.map((event) => (
 
-            ))}
-    </div>
-  )
+                    <EventCard key={event._id} eventname={event} state={"Deregister"} userId={id}/>
+
+                ))}
+        </div>
+        )
+    }
+    catch(e){
+        return(
+            <div>
+                <Navbar username={username} password={password} id={id}/>
+                <br/><br/>
+                <h1>No Events Registered</h1>
+            </div>
+        )
+    }
 }
 
 export default UserEvents
