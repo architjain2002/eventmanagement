@@ -202,17 +202,17 @@ exports.signUpAdmin = async (req, res) => {
 
 exports.signInAdmin = async(req,res)=>{
   
-  const username=req.body.username;
+  const name=req.body.name;
   const password=req.body.password;
-
+  
   try{
-    const admin= await Admin.find({username,password});
-
+    const admin= await Admin.find({name:name,password:password});
+  
     if(!admin.length){
-        res.send("No user found");
+        res.send({message:"No user found"});
     }
     else{
-      res.send("Success");
+      res.send({message:"Success"});
     }
   }
   catch(err){

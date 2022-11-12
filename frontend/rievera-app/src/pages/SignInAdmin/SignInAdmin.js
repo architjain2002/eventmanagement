@@ -1,12 +1,7 @@
 import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
@@ -17,21 +12,24 @@ import { useNavigate} from 'react-router-dom';
 
 const theme = createTheme();
 
-function SignIn() {
+ 
+
+function SignInAdmin() {
+
   const navigate=useNavigate();
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
     const Signin= async()=>{
-        const response=await fetch('http://localhost:3000/signIn',{
+        const response=await fetch('http://localhost:3000/signInAdmin',{
             method: "POST",
             headers: {
                 'Content-type': 'application/json'
             },
             body: JSON.stringify(
                 { 
-                    username: data.get('username'),
+                    name: data.get('name'),
                     password: data.get('password'),
 
                 }
@@ -44,14 +42,12 @@ function SignIn() {
 
         }
         else{
-          navigate('/home',{state:{username:data.get('username'),password: data.get('password'),id:json.message}});
+          navigate('/admin',{state:{name:data.get('name'),password: data.get('password'),id:json.message}});
         }
 
     }
     return Signin();
-
-  };
-
+  }
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -73,10 +69,10 @@ function SignIn() {
               margin="normal"
               required
               fullWidth
-              id="username"
-              label="Username"
-              name="username"
-              autoComplete="username"
+              id="name"
+              label="Admin Name"
+              name="name"
+              autoComplete="name"
               autoFocus
             />
             <TextField
@@ -89,10 +85,6 @@ function SignIn() {
               id="password"
               autoComplete="current-password"
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
             <Button
               type="submit"
               fullWidth
@@ -101,11 +93,6 @@ function SignIn() {
             >
               Sign In
             </Button>
-            <Grid item sx={{ mx:10}}>
-                <Link href="/signUp" variant="body2">
-                  {"Don't have an account?SignUp"}
-                </Link>
-            </Grid>
           </Box>
         </Box>
       </Container>
@@ -113,4 +100,4 @@ function SignIn() {
   );
 }
 
-export default SignIn;
+export default SignInAdmin;

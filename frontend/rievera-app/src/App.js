@@ -9,10 +9,13 @@ import {
 } from "react-router-dom";
 import { redirect } from "react-router-dom";
 import './App.css';
+import Main from "./pages/Main/Main";
 import Signin from "./pages/Sigin/Signin";
 import SignUp from "./pages/SignUp/SignUp";
 import Home from "./pages/Home/Home";
 import UserEvents from "./pages/UserEvents/UserEvents";
+import SignInAdmin from "./pages/SignInAdmin/SignInAdmin";
+import Admin from "./pages/Admin/Admin";
 
 function App() {
 
@@ -20,7 +23,8 @@ function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element:<Navigate to="/signIn"/>
+      // element:<Navigate to="/signIn"/>        /// '/'
+      element:<Main/>
     },
 
     {
@@ -39,6 +43,14 @@ function App() {
     {
       path:"/registeredevents",
       element:<UserEvents />
+    },
+    {
+      path:"/signin/admin",
+      element:<SignInAdmin/>
+    },
+    {
+      path:"/admin",
+      element:<Admin/>
     }
   ]);
 
