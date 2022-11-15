@@ -37,7 +37,7 @@ function Home() {
 
  useEffect(()=>{
     getEvents();
-    getUserEvent();
+    getUserEvent(); 
   },[]);
 
 

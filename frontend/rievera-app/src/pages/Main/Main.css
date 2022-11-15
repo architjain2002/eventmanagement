@@ -1,0 +1,29 @@
+*{
+    margin:0px;
+}
+.container{
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-position: center;
+    height:100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.button{
+    flex-direction: row;
+}
+.button >*{
+    width: 300px;
+    height:70px;
+    font-weight: bold;
+    border:2px solid rgb(119, 54, 54); 
+    margin:10px;
+    cursor: pointer;
+}
+.container > h1{
+    align-items:center;
+    color:black;
+}

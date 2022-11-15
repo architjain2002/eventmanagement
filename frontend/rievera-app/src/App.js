@@ -7,7 +7,6 @@ import {
   Link,
   Navigate,
 } from "react-router-dom";
-import { redirect } from "react-router-dom";
 import './App.css';
 import Main from "./pages/Main/Main";
 import Signin from "./pages/Sigin/Signin";
@@ -16,9 +15,13 @@ import Home from "./pages/Home/Home";
 import UserEvents from "./pages/UserEvents/UserEvents";
 import SignInAdmin from "./pages/SignInAdmin/SignInAdmin";
 import Admin from "./pages/Admin/Admin";
+import { useEffect } from "react";
 
 function App() {
 
+  useEffect(() => {
+    document.title = 'Rievera';
+  }, []);
 
   const router = createBrowserRouter([
     {
