@@ -3,6 +3,7 @@ import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
+import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -93,6 +94,10 @@ function SignInAdmin() {
             >
               Sign In
             </Button>
+
+              <Link href="/" variant="body2">
+                {"Go Back"}
+              </Link>
           </Box>
         </Box>
       </Container>

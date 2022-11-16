@@ -89,10 +89,6 @@ function SignIn() {
               id="password"
               autoComplete="current-password"
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
             <Button
               type="submit"
               fullWidth
@@ -101,10 +97,15 @@ function SignIn() {
             >
               Sign In
             </Button>
-            <Grid item sx={{ mx:10}}>
-                <Link href="/signUp" variant="body2">
-                  {"Don't have an account?SignUp"}
+            <Grid item>
+                <Link href="/signUp" variant="body2" sx={{ pr:10,pl:3}}>
+                  {"Don't have an account? SignUp"}
                 </Link>
+
+                <Link href="/" variant="body2">
+                  {"Go Back"}
+                </Link>
+
             </Grid>
           </Box>
         </Box>

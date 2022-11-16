@@ -16,6 +16,7 @@ import UserEvents from "./pages/UserEvents/UserEvents";
 import SignInAdmin from "./pages/SignInAdmin/SignInAdmin";
 import Admin from "./pages/Admin/Admin";
 import { useEffect } from "react";
+import Profile from './pages/Profile/Profile';
 
 function App() {
 
@@ -54,6 +55,10 @@ function App() {
     {
       path:"/admin",
       element:<Admin/>
+    },
+    {
+      path:"/profile",
+      element:<Profile/>
     }
   ]);
 

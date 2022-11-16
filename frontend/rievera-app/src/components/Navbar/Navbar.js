@@ -13,6 +13,8 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import HomeIcon from '@mui/icons-material/Home';
 import { useNavigate} from 'react-router-dom';
+import TextField from '@mui/material/TextField';
+import './Navbar.css';
 
 const pages = ['My Events'];
 const settings = ['Profile','Logout'];
@@ -42,8 +44,8 @@ function Navbar({username,password,id}) {
 
     if(setting==='Logout')
       window.location.pathname='/signIn';
-    
-    //in else show profile
+    else
+      navigate('/profile',{state:{username,password,id}});
     
   }
   const navigateToHome=()=>{
@@ -146,7 +148,11 @@ function Navbar({username,password,id}) {
                 {page}
               </Button>
             ))}
+
           </Box>
+
+          
+          <TextField id="outlined-basic" label="Search" variant="outlined"  sx={{mr:20,width:300,color:'white'}} className="search" />
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">

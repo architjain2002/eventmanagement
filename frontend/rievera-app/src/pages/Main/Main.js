@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import './Main.css';
 import { useState } from 'react';
-import Navbar from '../../components/Navbar/Navbar';
 import EventCard from '../../components/Card/Card';
+import SideImage from "./do_event.avif";
 function Main() {
     const [events,setEvents]=useState([]);
     function user(){
@@ -26,24 +26,28 @@ function Main() {
     
       return shuffled.slice(0, num);
     }
-    let arr=getMultipleRandom(events,2)
+    let arr=getMultipleRandom(events,4)
 
   return (
     <div className='container'>
-      
-        <h1>Rievera - Event Management Page</h1>
-
-        <div className='button'>
-          <button onClick={admin}>Sign In as Admin</button>
-          <button onClick={user}>Sign In as User</button>
-        </div>
         
+        <h1 className='title'>Rievera - Event Management Page</h1>
+
+
+       <div className='flexi'> 
+          <div className='button'>
+            <button onClick={admin}>Sign In as Admin</button>
+            <button onClick={user}>Sign In as User</button>
+          </div>
+          <img src={SideImage} alt="buddy" width="400px" height="400px" className='image'/>
+        </div>
+
         <div style={{display:'flex',flexWrap:'wrap'}}>
-        {arr.map((newevent) => (
+            {arr.map((newevent) => (
 
-            <EventCard key={newevent._id} eventname={newevent} state={" "}/>
+                <EventCard key={newevent._id} eventname={newevent} state={" "}/>
 
-        ))}
+            ))}
         </div>
     </div>
   )
