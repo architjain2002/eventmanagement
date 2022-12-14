@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import { useNavigate,Navigate, redirect } from 'react-router-dom';
 
 
-function EventCard({eventname,state,userId}) {
+function EventCard({eventname,state,userId,del_event}) {
   
   const navigate=useNavigate();
   const url=eventname.website;
@@ -50,20 +50,27 @@ function EventCard({eventname,state,userId}) {
             }
         )
     });
-    
     const json = await response.json();
     window.location.reload(false);
 
   }
 
+  const Update= async()=>{
+      
+  }
+  
+  const ondelete=()=>{
 
+  }
 
   const handleClick=async()=>{
       console.log(state);
       if(state==="Register")
           Register();
-      else
+      else if(state==="Deregister")
           Deregister();
+      else
+          Update();
   }
   
   return (
@@ -85,8 +92,13 @@ function EventCard({eventname,state,userId}) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small" onClick={onclick}>Visit Website</Button>
-        <Button size="small" onClick={handleClick}>{state}</Button>
+        {del_event?(
+            <Button size="small" onClick={ondelete} style={{color:"red"}}>Delete</Button>
+          ):( 
+            <Button size="small" onClick={onclick}>Visit Website</Button>
+        )}
+    
+        <Button size="small" onClick={handleClick} style={{color:"green"}}>{state}</Button>
       </CardActions>
     </Card>
   );

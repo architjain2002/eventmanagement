@@ -3,6 +3,7 @@ import './Main.css';
 import { useState } from 'react';
 import EventCard from '../../components/Card/Card';
 import SideImage from "./do_event.avif";
+import Background from "./picture_a.jpg";
 function Main() {
     const [events,setEvents]=useState([]);
     function user(){
@@ -29,27 +30,30 @@ function Main() {
     let arr=getMultipleRandom(events,4)
 
   return (
-    <div className='container'>
-        
-        <h1 className='title'>Rievera - Event Management Page</h1>
+    <>
+      <img src={Background} alt="background" width="100%" style={{height: '80vh'}}/>
+      <div className='container'>
+          
+          <h1 className='title'>Rievera - Event Management Page</h1>
 
 
-       <div className='flexi'> 
-          <div className='button'>
-            <button onClick={admin}>Sign In as Admin</button>
-            <button onClick={user}>Sign In as User</button>
+          <div className='flexi'> 
+            <div className='button'>
+              <button onClick={admin}>Sign In as Admin</button>
+              <button onClick={user}>Sign In as User</button>
+            </div>
+            <img src={SideImage} alt="buddy" width="400px" height="400px" className='image'/>
           </div>
-          <img src={SideImage} alt="buddy" width="400px" height="400px" className='image'/>
+
+          <div style={{display:'flex',flexWrap:'wrap'}}>
+              {arr.map((newevent) => (
+
+                  <EventCard key={newevent._id} eventname={newevent} state={" "}/>
+
+              ))}
+          </div>
         </div>
-
-        <div style={{display:'flex',flexWrap:'wrap'}}>
-            {arr.map((newevent) => (
-
-                <EventCard key={newevent._id} eventname={newevent} state={" "}/>
-
-            ))}
-        </div>
-    </div>
+    </>
   )
 }
 

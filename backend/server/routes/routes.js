@@ -43,7 +43,7 @@ router.get("/events/:userId",controller.registeredEventByUser);
 
 //Admin
 
-// signUpAdmin
+// signUpAdmin -> not handling making only one admin
 router.post("/signUpAdmin",controller.signUpAdmin);
 
 //signInAdmin

@@ -13,7 +13,6 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import HomeIcon from '@mui/icons-material/Home';
 import { useNavigate} from 'react-router-dom';
-import TextField from '@mui/material/TextField';
 import './Navbar.css';
 
 const pages = ['My Events'];
@@ -151,8 +150,6 @@ function Navbar({username,password,id}) {
 
           </Box>
 
-          
-          <TextField id="outlined-basic" label="Search" variant="outlined"  sx={{mr:20,width:300,color:'white'}} className="search" />
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">

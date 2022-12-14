@@ -212,7 +212,7 @@ exports.signInAdmin = async(req,res)=>{
         res.send({message:"No user found"});
     }
     else{
-      res.send({message:"Success"});
+      res.send({message:admin[0]._id});
     }
   }
   catch(err){
