@@ -32,7 +32,7 @@ exports.addEvents = async (req, res) => {
     });
 
     await newEvent.save();
-    res.status(200).send("Event Added");
+    res.status(200).send({message:"Event Added"});
   } catch (err) {
     res.status(500).send({ message: err.message || "Error Occured" });
   }
@@ -255,9 +255,7 @@ exports.userVerification = async(req,res) =>{
 exports.deleteEvent = async (req,res) =>{
 try{
     const eventId=req.params.eventId;
-
     const eventsInAdmin=await AdminAccess.find({eventId:eventId});
-    
     for await (const event of eventsInAdmin){
         const userId=event.userId;
 
@@ -271,8 +269,8 @@ try{
 
     await AdminAccess.deleteMany({eventId:eventId});
 
-    await Event.deleteMany({eventId:eventId});
-    res.send("deleted");
+    await Event.deleteOne({_id:eventId});
+    res.send({message:"deleted"});
   }
     catch(err){
       res.status(500).send({ message: err.message || "Error Occured" });
