@@ -21,11 +21,11 @@ function Admin() {
 
   return (
     <div>
-        <NavbarAdmin username={username} password={password} id={id}/>
+        <NavbarAdmin username={username} password={password} id={id} getEvents={getEvents}/>
         <div style={{display:'flex',flexWrap:'wrap'}}>
         {events.map((event) => (
 
-            <EventCard key={event._id} eventname={event} state={"Update"} userId={id} del_event={true}/>
+            <EventCard key={event._id} eventname={event} state={"Update"} userId={event._id} del_event={true}/>
 
         ))}
         </div>

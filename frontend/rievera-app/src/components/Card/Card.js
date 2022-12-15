@@ -5,11 +5,12 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { useNavigate,Navigate, redirect } from 'react-router-dom';
-
+import { useNavigate,Navigate} from 'react-router-dom';
+import AlertDialog from '../Alert/Alert';
+import { useState } from 'react';
 
 function EventCard({eventname,state,userId,del_event}) {
-  
+  const [alert,setAlert]=useState(false);
   const navigate=useNavigate();
   const url=eventname.website;
   const onclick=()=>{
@@ -59,8 +60,19 @@ function EventCard({eventname,state,userId,del_event}) {
       
   }
   
-  const ondelete=()=>{
-
+  const utility=()=>{
+    const deleteEvent= async()=>{
+      const response = await fetch(`http://localhost:3000/deleteEvent/${userId}`,{
+        method:"DELETE"
+      });
+      const json = await response.json();
+      setAlert(false);
+      window.location.reload(false);
+    }
+    deleteEvent();
+  }
+  const futility=()=>{
+    setAlert(false);
   }
 
   const handleClick=async()=>{
@@ -75,6 +87,7 @@ function EventCard({eventname,state,userId,del_event}) {
   
   return (
     <Card sx={{ width:.40 ,margin:"5%"}}>
+    {alert&& <AlertDialog data={"Are you sure, you want to delete event"} utility={utility} futility={futility}/>}
       <CardMedia
         component="img"
         height="300"
@@ -93,13 +106,14 @@ function EventCard({eventname,state,userId,del_event}) {
       </CardContent>
       <CardActions>
         {del_event?(
-            <Button size="small" onClick={ondelete} style={{color:"red"}}>Delete</Button>
+            <Button size="small" onClick={()=>setAlert(true)} style={{color:"red"}}>Delete</Button>
           ):( 
             <Button size="small" onClick={onclick}>Visit Website</Button>
         )}
     
         <Button size="small" onClick={handleClick} style={{color:"green"}}>{state}</Button>
       </CardActions>
+      
     </Card>
   );
 }

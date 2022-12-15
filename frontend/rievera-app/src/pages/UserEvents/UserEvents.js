@@ -16,10 +16,13 @@ function UserEvents() {
             const json = await response.json();
             setUserEvent(userEvent=>[...userEvent,...json]);
         }
+        {console.log(userEvent)}
         getUserEvent();
     },[])
     
     try{
+        if(userEvent.length===0)
+            throw true;
         return ( 
 
         <div>
@@ -40,7 +43,7 @@ function UserEvents() {
         return(
             <div>
                 <Navbar username={username} password={password} id={id}/>
-                <br/><br/>
+                <br/><br/><br/><br/><br/>
                 <h1>No Events Registered</h1>
             </div>
         )

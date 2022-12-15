@@ -23,7 +23,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 const pages = ["Add Events"];
 const settings = ["Profile", "Logout"];
 
-function NavbarAdmin({ username, password, id }) {
+function NavbarAdmin({ username, password, id ,getEvents}) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [dialog, setDialog] = React.useState(false);
@@ -50,6 +50,34 @@ function NavbarAdmin({ username, password, id }) {
   };
   const navigateToHomeAdmin = () => {
     navigate("/admin", { state: { username, password, id } });
+  };
+
+  const addEvent = async () => {
+    const name = document.getElementById("name").value;
+    const capacity = document.getElementById("capacity").value;
+    const venue = document.getElementById("venue").value;
+    const imageLink = document.getElementById("imageLink").value;
+    const description = document.getElementById("description").value;
+    const websiteLink = document.getElementById("websiteLink").value;
+    const response = await fetch("http://localhost:3000/addevents", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({
+        name,
+        capacity,
+        venue,
+        image: imageLink,
+        text: description,
+        website: websiteLink,
+      }),
+    });
+
+    const json = await response.json();
+    console.log(json.message);
+    setDialog(false);
+    getEvents();
   };
 
   return (
@@ -122,7 +150,7 @@ function NavbarAdmin({ username, password, id }) {
             variant="h5"
             noWrap
             component="a"
-            // href="/home"
+            // href="/home" 
             onClick={navigateToHomeAdmin}
             sx={{
               mr: 2,
@@ -212,7 +240,7 @@ function NavbarAdmin({ username, password, id }) {
                 <TextField
                   autoFocus
                   margin="dense"
-                  id="name"
+                  id="capacity"
                   label="Capacity"
                   type="number"
                   fullWidth
@@ -221,7 +249,7 @@ function NavbarAdmin({ username, password, id }) {
                 <TextField
                   autoFocus
                   margin="dense"
-                  id="name"
+                  id="venue"
                   label="Venue"
                   type="text"
                   fullWidth
@@ -230,7 +258,7 @@ function NavbarAdmin({ username, password, id }) {
                 <TextField
                   autoFocus
                   margin="dense"
-                  id="name"
+                  id="imageLink"
                   label="Image Link"
                   type="text"
                   fullWidth
@@ -239,7 +267,7 @@ function NavbarAdmin({ username, password, id }) {
                 <TextField
                   autoFocus
                   margin="dense"
-                  id="name"
+                  id="description"
                   label="Description"
                   type="text"
                   fullWidth
@@ -248,7 +276,7 @@ function NavbarAdmin({ username, password, id }) {
                 <TextField
                   autoFocus
                   margin="dense"
-                  id="name"
+                  id="websiteLink"
                   label="Website Link"
                   type="text"
                   fullWidth
@@ -257,7 +285,7 @@ function NavbarAdmin({ username, password, id }) {
               </DialogContent>
               <DialogActions>
                 <Button onClick={() => setDialog(false)}>Cancel</Button>
-                <Button onClick={() => setDialog(false)}>Add</Button>
+                <Button onClick={() => addEvent()}>Add</Button>
               </DialogActions>
             </Dialog>
           )}
