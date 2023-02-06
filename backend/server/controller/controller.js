@@ -250,6 +250,28 @@ exports.userVerification = async(req,res) =>{
 
 //Needs to be checked
 //Update Event -> Only name ,venue, participant
+exports.updateEvent= async(req,res)=>{
+  try{
+      const eventId=req.body.eventId; 
+      const oldData=await Event.find({_id:eventId});
+
+
+      const name=(req.body.name!="")?req.body.name:oldData[0].name;
+      const capacity= (req.body.capacity!="")?req.body.capacity:oldData[0].capacity;
+      const venue=(req.body.venue!="")?req.body.venue:oldData[0].venue;
+      const image=(req.body.image!="")?req.body.image:oldData[0].image;
+      const text=(req.body.text!="")?req.body.text:oldData[0].text;
+      const website=(req.body.website!="")?req.body.website:oldData[0].website;
+
+      const updateEvent = await  Event.findOneAndUpdate({_id:req.body.eventId},{name:name,capacity:capacity,venue:venue,image:image,text:text,website:website});
+        
+      res.status(200).send({message:"Event updated"});
+
+  }
+  catch(err){
+    res.status(500).send({ message: err.message || "Error Occured" });
+  }
+};
 
 //delete event
 exports.deleteEvent = async (req,res) =>{
@@ -259,7 +281,6 @@ try{
     for await (const event of eventsInAdmin){
         const userId=event.userId;
 
-        
        //Delete Event from User Array 
       
        //Pull that value in the array which has eventId and delete it

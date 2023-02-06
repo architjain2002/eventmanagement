@@ -8,9 +8,15 @@ import Typography from '@mui/material/Typography';
 import { useNavigate,Navigate} from 'react-router-dom';
 import AlertDialog from '../Alert/Alert';
 import { useState } from 'react';
+import TextField from "@mui/material/TextField";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
 
 function EventCard({eventname,state,userId,del_event}) {
   const [alert,setAlert]=useState(false);
+  const [update,setUpdate]=useState(false);
   const navigate=useNavigate();
   const url=eventname.website;
   const onclick=()=>{
@@ -57,9 +63,39 @@ function EventCard({eventname,state,userId,del_event}) {
   }
 
   const Update= async()=>{
-      
+    // /event/update
+    setUpdate(true);
   }
   
+  const updateUtility = async()=>{
+    const name = document.getElementById("name").value;
+    const capacity = document.getElementById("capacity").value;
+    const venue = document.getElementById("venue").value;
+    const imageLink = document.getElementById("imageLink").value;
+    const description = document.getElementById("description").value;
+    const websiteLink = document.getElementById("websiteLink").value;
+
+    const response = await fetch("http://localhost:3000/event/update", {
+      method: "PUT",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({
+        eventId:userId,
+        name,
+        capacity,
+        venue,
+        image: imageLink,
+        text: description,
+        website: websiteLink,
+      }),
+    });
+
+    setUpdate(false);
+    window.location.reload(false);
+  }
+  
+
   const utility=()=>{
     const deleteEvent= async()=>{
       const response = await fetch(`http://localhost:3000/deleteEvent/${userId}`,{
@@ -87,7 +123,72 @@ function EventCard({eventname,state,userId,del_event}) {
   
   return (
     <Card sx={{ width:.40 ,margin:"5%"}}>
-    {alert&& <AlertDialog data={"Are you sure, you want to delete event"} utility={utility} futility={futility}/>}
+    {alert&&<AlertDialog data={"Are you sure, you want to delete event"} utility={utility} futility={futility}/>}
+    {update&& (
+            <Dialog open={update} onClose={()=>setUpdate(false)}>
+              <DialogTitle>Update Event</DialogTitle>
+              <DialogContent>
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  id="name"
+                  label="Name"
+                  type="text"
+                  fullWidth
+                  variant="standard"
+                />
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  id="capacity"
+                  label="Capacity"
+                  type="number"
+                  fullWidth
+                  variant="standard"
+                />
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  id="venue"
+                  label="Venue"
+                  type="text"
+                  fullWidth
+                  variant="standard"
+                />
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  id="imageLink"
+                  label="Image Link"
+                  type="text"
+                  fullWidth
+                  variant="standard"
+                />
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  id="description"
+                  label="Description"
+                  type="text"
+                  fullWidth
+                  variant="standard"
+                />
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  id="websiteLink"
+                  label="Website Link"
+                  type="text"
+                  fullWidth
+                  variant="standard"
+                />
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={()=>setUpdate(false)}>Cancel</Button>
+                <Button onClick={()=>updateUtility()}>Update</Button>
+              </DialogActions>
+            </Dialog>
+        )}
       <CardMedia
         component="img"
         height="300"
@@ -113,7 +214,6 @@ function EventCard({eventname,state,userId,del_event}) {
     
         <Button size="small" onClick={handleClick} style={{color:"green"}}>{state}</Button>
       </CardActions>
-      
     </Card>
   );
 }

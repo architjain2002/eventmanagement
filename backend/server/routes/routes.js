@@ -53,6 +53,8 @@ router.post("/signInAdmin",controller.signInAdmin);
 //participant Verification
 router.post("/userverificaton",controller.userVerification);
 
+router.put("/event/update",controller.updateEvent);
+
 router.delete("/deleteEvent/:eventId",controller.deleteEvent);
 
 module.exports = router;
