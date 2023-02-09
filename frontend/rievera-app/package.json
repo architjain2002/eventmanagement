@@ -1,6 +1,6 @@
 {
-  "homepage": "https://rievera-app.vercel.app", 
-  "name": "rievera-app",
+  "homepage": "https://rievera-web.vercel.app", 
+  "name": "rievera-web",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
