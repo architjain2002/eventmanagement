@@ -1,0 +1,34 @@
+{
+  "version": 2,
+  "routes": [
+    {
+      "src": "/",
+      "dest": "backend/app.js"
+    },
+    {
+      "src": ".*",
+      "dest": "frontend/rievera-app/build/index.html",
+      "headers": {
+        "cache-control": "s-maxage=0"
+      }
+    }
+  ],
+  "builds": [
+    {
+      "src": "backend/package.json",
+      "use": "@vercel/node",
+      "config": {
+        "command": "npm run start",
+        "output": "backend"
+      }
+    },
+    {
+      "src": "frontend/rievera-app/package.json",
+      "use": "@vercel/node",
+      "config": {
+        "command": "npm run build",
+        "output": "frontend/rievera-app/build"
+      }
+    }
+  ]
+}
