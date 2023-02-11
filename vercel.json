@@ -1,18 +1,5 @@
 {
   "version": 2,
-  "routes": [
-    {
-      "src": "^/api/(.*)",
-      "dest": "./backend/app.js"
-    },
-    {
-      "src": ".*",
-      "dest": "./frontend/rievera-app/build/index.html",
-      "headers": {
-        "cache-control": "s-maxage=0"
-      }
-    }
-  ],
   "builds": [
     {
       "src": "./backend/app.js",
@@ -21,6 +8,12 @@
     {
       "src": "./frontend/rievera-app/build",
       "use": "@vercel/static"
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "^/api/(.*)",
+      "destination": "/backend/server.js"
     }
   ]
 }
