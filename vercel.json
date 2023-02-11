@@ -18,8 +18,7 @@
       "src": "backend/package.json",
       "use": "@vercel/node",
       "config": {
-        "command": "npm run start",
-        "output": "backend"
+        "command": "npm start"
       }
     },
     {
