@@ -3,11 +3,11 @@
   "routes": [
     {
       "src": "^/api/(.*)",
-      "dest": "backend/app.js"
+      "dest": "./backend/app.js"
     },
     {
       "src": ".*",
-      "dest": "frontend/rievera-app/build/index.html",
+      "dest": "./frontend/rievera-app/build/index.html",
       "headers": {
         "cache-control": "s-maxage=0"
       }
@@ -15,18 +15,18 @@
   ],
   "builds": [
     {
-      "src": "./backend/app.js",
+      "src": "./backend",
       "use": "@vercel/node",
       "config": {
         "command": "npm start"
       }
     },
     {
-      "src": "./frontend/rievera-app/package.json",
+      "src": "./frontend/rievera-app",
       "use": "@vercel/node",
       "config": {
         "command": "npm run build",
-        "output": "frontend/rievera-app/build"
+        "output": "./frontend/rievera-app/build"
       }
     }
   ]
