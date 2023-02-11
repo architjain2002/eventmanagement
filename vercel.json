@@ -16,18 +16,11 @@
   "builds": [
     {
       "src": "./backend/app.js",
-      "use": "@vercel/node",
-      "config": {
-        "command": "npm start"
-      }
+      "use": "@vercel/node"
     },
     {
       "src": "./frontend/rievera-app/build",
-      "use": "@vercel/node",
-      "config": {
-        "command": "npm run build",
-        "output": "./frontend/rievera-app/build"
-      }
+      "use": "@vercel/static"
     }
   ]
 }
