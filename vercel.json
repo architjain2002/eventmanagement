@@ -15,14 +15,14 @@
   ],
   "builds": [
     {
-      "src": "backend",
+      "src": "backend/app.js",
       "use": "@vercel/node",
       "config": {
         "command": "npm start"
       }
     },
     {
-      "src": "frontend/rievera-app",
+      "src": "frontend/rievera-app/package.json",
       "use": "@vercel/node",
       "config": {
         "command": "npm run build",
