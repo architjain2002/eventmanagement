@@ -22,7 +22,7 @@
       }
     },
     {
-      "src": "./frontend/rievera-app/App.js",
+      "src": "./frontend/rievera-app/index.js",
       "use": "@vercel/node",
       "config": {
         "command": "npm run build",
